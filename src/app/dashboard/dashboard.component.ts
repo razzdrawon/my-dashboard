@@ -29,9 +29,14 @@ export class DashboardComponent {
     this.loadKpis();
   }
 
+  onDateRangeChange(): void {
+    this.loadKpis();
+  }
+
   private loadKpis(): void {
     this.kpis = this.dataService.getKpis(
-      this.selectedOrganization || undefined
+      this.selectedOrganization || undefined,
+      this.selectedDateRange || undefined
     );
   }
 }

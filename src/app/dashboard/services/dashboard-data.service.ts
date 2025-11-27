@@ -6,57 +6,121 @@ import { KpiCardData } from '../components/kpi-card/kpi-card.component';
   providedIn: 'root'
 })
 export class DashboardDataService {
-  getKpis(organizationId?: string): KpiCardData[] {
-    // Datos base por organización
-    const kpiDataByOrg: { [key: string]: KpiCardData[] } = {
-      '1': [
-        { label: 'TOTAL USECASES', value: '180', description: 'in development & production' },
-        { label: 'USECASES IN PRODUCTION', value: '172', trend: '+45 in last 6 Months' },
-        { label: 'USECASE DEPLOYMENT TIMES', value: '58', description: 'days on average' },
-        { label: 'CRITICAL OVERDUE RISKS', value: '12', description: 'across 38 usecases' }
+  getKpis(organizationId?: string, dateRangeId?: string): KpiCardData[] {
+    // Helper para obtener el texto del trend según el rango de fechas
+    const getTrendText = (months: number, dateRangeId?: string) => {
+      if (!dateRangeId) return `+${months} in last 6 Months`;
+      const rangeMap: { [key: string]: string } = {
+        '3months': `+${Math.floor(months * 0.5)} in last 3 Months`,
+        '6months': `+${months} in last 6 Months`,
+        '1year': `+${Math.floor(months * 1.8)} in last year`
+      };
+      return rangeMap[dateRangeId] || `+${months} in last 6 Months`;
+    };
+
+    // Datos base por organización y rango de fechas
+    const kpiDataByOrgAndDate: { [key: string]: { [key: string]: KpiCardData[] } } = {
+      '1': {
+        '3months': [
+          { label: 'TOTAL USECASES', value: '175', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '168', trend: getTrendText(22, '3months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '56', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '10', description: 'across 35 usecases' }
+        ],
+        '6months': [
+          { label: 'TOTAL USECASES', value: '180', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '172', trend: getTrendText(45, '6months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '58', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '12', description: 'across 38 usecases' }
+        ],
+        '1year': [
+          { label: 'TOTAL USECASES', value: '195', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '185', trend: getTrendText(81, '1year') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '60', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '14', description: 'across 42 usecases' }
+        ]
+      },
+      '2': {
+        '3months': [
+          { label: 'TOTAL USECASES', value: '92', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '85', trend: getTrendText(14, '3months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '63', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '6', description: 'across 20 usecases' }
+        ],
+        '6months': [
+          { label: 'TOTAL USECASES', value: '95', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '88', trend: getTrendText(28, '6months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '65', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '8', description: 'across 22 usecases' }
+        ],
+        '1year': [
+          { label: 'TOTAL USECASES', value: '102', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '95', trend: getTrendText(50, '1year') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '67', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '9', description: 'across 25 usecases' }
+        ]
+      },
+      '3': {
+        '3months': [
+          { label: 'TOTAL USECASES', value: '138', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '132', trend: getTrendText(17, '3months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '61', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '8', description: 'across 28 usecases' }
+        ],
+        '6months': [
+          { label: 'TOTAL USECASES', value: '142', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '135', trend: getTrendText(35, '6months') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '63', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '10', description: 'across 31 usecases' }
+        ],
+        '1year': [
+          { label: 'TOTAL USECASES', value: '155', description: 'in development & production' },
+          { label: 'USECASES IN PRODUCTION', value: '148', trend: getTrendText(63, '1year') },
+          { label: 'USECASE DEPLOYMENT TIMES', value: '65', description: 'days on average' },
+          { label: 'CRITICAL OVERDUE RISKS', value: '12', description: 'across 36 usecases' }
+        ]
+      }
+    };
+
+    // Si hay una organización seleccionada, buscar datos específicos
+    if (organizationId && kpiDataByOrgAndDate[organizationId]) {
+      const orgData = kpiDataByOrgAndDate[organizationId];
+      // Si hay un rango de fechas seleccionado, usar esos datos
+      if (dateRangeId && orgData[dateRangeId]) {
+        return orgData[dateRangeId];
+      }
+      // Si no hay rango de fechas, usar el default de 6 meses
+      return orgData['6months'] || orgData[Object.keys(orgData)[0]];
+    }
+
+    // Si no hay filtro de organización, devolver datos agregados según el rango de fechas
+    const aggregatedData: { [key: string]: KpiCardData[] } = {
+      '3months': [
+        { label: 'TOTAL USECASES', value: '210', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '200', trend: getTrendText(26, '3months') },
+        { label: 'USECASE DEPLOYMENT TIMES', value: '59', description: 'days on average' },
+        { label: 'CRITICAL OVERDUE RISKS', value: '12', description: 'across 41 usecases' }
       ],
-      '2': [
-        { label: 'TOTAL USECASES', value: '95', description: 'in development & production' },
-        { label: 'USECASES IN PRODUCTION', value: '88', trend: '+28 in last 6 Months' },
-        { label: 'USECASE DEPLOYMENT TIMES', value: '65', description: 'days on average' },
-        { label: 'CRITICAL OVERDUE RISKS', value: '8', description: 'across 22 usecases' }
+      '6months': [
+        { label: 'TOTAL USECASES', value: '223', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '215', trend: getTrendText(62, '6months') },
+        { label: 'USECASE DEPLOYMENT TIMES', value: '61', description: 'days on average' },
+        { label: 'CRITICAL OVERDUE RISKS', value: '15', description: 'across 46 usecases' }
       ],
-      '3': [
-        { label: 'TOTAL USECASES', value: '142', description: 'in development & production' },
-        { label: 'USECASES IN PRODUCTION', value: '135', trend: '+35 in last 6 Months' },
+      '1year': [
+        { label: 'TOTAL USECASES', value: '245', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '235', trend: getTrendText(112, '1year') },
         { label: 'USECASE DEPLOYMENT TIMES', value: '63', description: 'days on average' },
-        { label: 'CRITICAL OVERDUE RISKS', value: '10', description: 'across 31 usecases' }
+        { label: 'CRITICAL OVERDUE RISKS', value: '18', description: 'across 52 usecases' }
       ]
     };
 
-    // Si hay una organización seleccionada, devolver sus datos
-    if (organizationId && kpiDataByOrg[organizationId]) {
-      return kpiDataByOrg[organizationId];
+    if (dateRangeId && aggregatedData[dateRangeId]) {
+      return aggregatedData[dateRangeId];
     }
 
-    // Si no hay filtro, devolver datos agregados (total)
-    return [
-      { 
-        label: 'TOTAL USECASES', 
-        value: '223',
-        description: 'in development & production'
-      },
-      { 
-        label: 'USECASES IN PRODUCTION', 
-        value: '215',
-        trend: '+62 in last 6 Months'
-      },
-      { 
-        label: 'USECASE DEPLOYMENT TIMES', 
-        value: '61',
-        description: 'days on average'
-      },
-      { 
-        label: 'CRITICAL OVERDUE RISKS', 
-        value: '15',
-        description: 'across 46 usecases'
-      }
-    ];
+    // Default: datos agregados de 6 meses
+    return aggregatedData['6months'];
   }
 
   getLineChartData(): ChartConfiguration<'line'>['data'] {

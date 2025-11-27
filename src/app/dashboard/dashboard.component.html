@@ -19,7 +19,7 @@
       <select 
         id="dateRange" 
         [value]="selectedDateRange"
-        (change)="selectedDateRange = $any($event.target).value"
+        (change)="selectedDateRange = $any($event.target).value; onDateRangeChange()"
         class="filter-select">
         <option value="">Select</option>
         @for (range of dateRanges; track range.id) {
