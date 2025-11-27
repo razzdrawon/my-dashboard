@@ -22,12 +22,33 @@ export class LineChartComponent implements OnChanges {
     plugins: {
       legend: {
         display: true,
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          color: '#b0b0b0',
+          padding: 15,
+          font: {
+            size: 12
+          }
+        }
       }
     },
     scales: {
+      x: {
+        ticks: {
+          color: '#b0b0b0'
+        },
+        grid: {
+          color: '#404040'
+        }
+      },
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks: {
+          color: '#b0b0b0'
+        },
+        grid: {
+          color: '#404040'
+        }
       }
     }
   };

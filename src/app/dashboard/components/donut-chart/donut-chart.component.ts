@@ -29,7 +29,14 @@ export class DonutChartComponent {
     plugins: {
       legend: {
         display: true,
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          color: '#b0b0b0',
+          padding: 15,
+          font: {
+            size: 12
+          }
+        }
       }
     }
   };

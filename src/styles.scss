@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+/* Dark theme overrides */
+:root {
+  --dark-bg: #1a1a1a;
+  --dark-surface: #2d2d2d;
+  --dark-card: #252525;
+  --dark-text: #ffffff;
+  --dark-text-secondary: #b0b0b0;
+  --dark-border: #404040;
+  --dark-accent: #3f51b5;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Material Design dark theme overrides */
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: var(--dark-surface) !important;
+  }
+
+  .mat-mdc-form-field-label {
+    color: var(--dark-text-secondary) !important;
+  }
+
+  .mat-mdc-select-value {
+    color: var(--dark-text) !important;
+  }
+
+  .mat-mdc-form-field-outline {
+    color: var(--dark-border) !important;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background-color: transparent !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: var(--dark-text-secondary) !important;
+  }
+
+  &.mat-focused {
+    .mat-mdc-form-field-outline-thick {
+      color: var(--dark-accent) !important;
+    }
+  }
+}
+
+.mat-mdc-select-panel {
+  background-color: var(--dark-surface) !important;
+  
+  .mat-mdc-option {
+    color: var(--dark-text) !important;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    &.mdc-list-item--selected {
+      background-color: rgba(63, 81, 181, 0.2) !important;
+    }
+  }
+}

@@ -1,32 +1,25 @@
 <div class="dashboard-container">
   <!-- Top Filters -->
   <div class="top-filters">
-    <div class="filter-left">
-      <label for="organization">Organization:</label>
-      <select 
-        id="organization" 
-        [value]="selectedOrganization"
-        (change)="selectedOrganization = $any($event.target).value; onOrganizationChange()"
-        class="filter-select">
-        <option value="">All</option>
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Display by Organization</mat-label>
+      <mat-select [value]="selectedOrganization" (selectionChange)="onOrganizationChange($event)">
+        <mat-option value="">All Organization</mat-option>
         @for (org of organizations; track org.id) {
-          <option [value]="org.id">{{ org.name }}</option>
+          <mat-option [value]="org.id">{{ org.name }}</mat-option>
         }
-      </select>
-    </div>
-    <div class="filter-right">
-      <label for="dateRange">Period:</label>
-      <select 
-        id="dateRange" 
-        [value]="selectedDateRange"
-        (change)="selectedDateRange = $any($event.target).value; onDateRangeChange()"
-        class="filter-select">
-        <option value="">Select</option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Period</mat-label>
+      <mat-select [value]="selectedDateRange" (selectionChange)="onDateRangeChange($event)">
+        <mat-option value="">Select Period</mat-option>
         @for (range of dateRanges; track range.id) {
-          <option [value]="range.id">{{ range.label }}</option>
+          <mat-option [value]="range.id">{{ range.label }}</mat-option>
         }
-      </select>
-    </div>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <!-- KPI Cards -->

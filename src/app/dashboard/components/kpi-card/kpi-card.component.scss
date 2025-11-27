@@ -1,34 +1,53 @@
 .kpi-card {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
 }
 
 .kpi-label {
-  font-size: 0.875rem;
-  color: #666;
-  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--dark-text-secondary);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
 }
 
 .kpi-value {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 0.25rem;
+  color: var(--dark-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .kpi-description {
-  font-size: 0.75rem;
-  color: #999;
+  font-size: 0.8125rem;
+  color: var(--dark-text-secondary);
   margin-top: 0.5rem;
+  line-height: 1.4;
 }
 
 .kpi-trend {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: #4caf50;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &::before {
+    content: '↑';
+    font-size: 0.875rem;
+  }
 }
 

@@ -257,10 +257,25 @@ export class DashboardDataService {
   }
 
   getDateRanges() {
+    const today = new Date();
+    const formatDate = (date: Date) => {
+      const day = date.getDate();
+      const month = date.toLocaleString('en-US', { month: 'short' });
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
+    };
+
+    const getDateRange = (months: number) => {
+      const endDate = new Date(today);
+      const startDate = new Date(today);
+      startDate.setMonth(startDate.getMonth() - months);
+      return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+    };
+
     return [
-      { id: '6months', label: 'Last 6 months' },
-      { id: '3months', label: 'Last 3 months' },
-      { id: '1year', label: 'Last year' }
+      { id: '6months', label: `Last 6 months (${getDateRange(6)})` },
+      { id: '3months', label: `Last 3 months (${getDateRange(3)})` },
+      { id: '1year', label: `Last year (${getDateRange(12)})` }
     ];
   }
 }
