@@ -4,6 +4,50 @@
   margin: 0 auto;
 }
 
+.top-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.filter-left,
+.filter-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-left label,
+.filter-right label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.filter-select {
+  padding: 0.625rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  background-color: white;
+  min-width: 200px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #999;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+}
+
 .kpi-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
