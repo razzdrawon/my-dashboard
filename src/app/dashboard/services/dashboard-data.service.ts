@@ -123,60 +123,80 @@ export class DashboardDataService {
     return aggregatedData['6months'];
   }
 
-  getLineChartData(): ChartConfiguration<'line'>['data'] {
+  getLineChartData(dateRangeId?: string): ChartConfiguration<'line'>['data'] {
+    // Definir labels según el rango de fechas
+    const getLabels = (dateRangeId?: string): string[] => {
+      if (dateRangeId === '3months') {
+        return ['Sep', 'Oct', 'Nov'];
+      } else if (dateRangeId === '1year') {
+        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      } else {
+        // Default: 6 meses
+        return ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+      }
+    };
+
+    // Datos base para 6 meses
+    const baseData6Months = {
+      'North America & Canada': [12, 15, 18, 22, 25, 28, 30],
+      'Japan': [8, 10, 12, 14, 16, 18, 20],
+      'UK & Ireland': [6, 8, 10, 12, 14, 16, 18],
+      'South Asia': [5, 7, 9, 11, 13, 15, 17],
+      'South East Asia': [4, 6, 8, 10, 12, 14, 16],
+      'Australia & New Zealand': [3, 5, 7, 9, 11, 13, 15],
+      'MENA': [2, 4, 6, 8, 10, 12, 14]
+    };
+
+    // Datos para 3 meses (últimos 3 meses)
+    const data3Months = {
+      'North America & Canada': [25, 28, 30],
+      'Japan': [16, 18, 20],
+      'UK & Ireland': [14, 16, 18],
+      'South Asia': [13, 15, 17],
+      'South East Asia': [12, 14, 16],
+      'Australia & New Zealand': [11, 13, 15],
+      'MENA': [10, 12, 14]
+    };
+
+    // Datos para 1 año (12 meses)
+    const data1Year = {
+      'North America & Canada': [8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 30, 32],
+      'Japan': [5, 6, 8, 9, 10, 12, 13, 14, 16, 18, 20, 22],
+      'UK & Ireland': [4, 5, 6, 7, 8, 10, 11, 12, 14, 16, 18, 20],
+      'South Asia': [3, 4, 5, 6, 7, 9, 10, 11, 13, 15, 17, 19],
+      'South East Asia': [2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18],
+      'Australia & New Zealand': [2, 2, 3, 4, 5, 7, 8, 9, 11, 13, 15, 17],
+      'MENA': [1, 2, 2, 3, 4, 6, 7, 8, 10, 12, 14, 16]
+    };
+
+    const getDataForRange = (dateRangeId?: string) => {
+      if (dateRangeId === '3months') return data3Months;
+      if (dateRangeId === '1year') return data1Year;
+      return baseData6Months;
+    };
+
+    const data = getDataForRange(dateRangeId);
+    const labels = getLabels(dateRangeId);
+
+    const colors = [
+      { border: 'rgba(30, 64, 175, 1)', bg: 'rgba(30, 64, 175, 0.1)' },
+      { border: 'rgba(59, 130, 246, 1)', bg: 'rgba(59, 130, 246, 0.1)' },
+      { border: 'rgba(147, 51, 234, 1)', bg: 'rgba(147, 51, 234, 0.1)' },
+      { border: 'rgba(34, 197, 94, 1)', bg: 'rgba(34, 197, 94, 0.1)' },
+      { border: 'rgba(37, 99, 235, 1)', bg: 'rgba(37, 99, 235, 0.1)' },
+      { border: 'rgba(107, 114, 128, 1)', bg: 'rgba(107, 114, 128, 0.1)' },
+      { border: 'rgba(126, 34, 206, 1)', bg: 'rgba(126, 34, 206, 0.1)' }
+    ];
+
     return {
-      labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
-      datasets: [
-        {
-          data: [12, 15, 18, 22, 25, 28, 30],
-          label: 'North America & Canada',
-          borderColor: 'rgba(30, 64, 175, 1)',
-          backgroundColor: 'rgba(30, 64, 175, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [8, 10, 12, 14, 16, 18, 20],
-          label: 'Japan',
-          borderColor: 'rgba(59, 130, 246, 1)',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [6, 8, 10, 12, 14, 16, 18],
-          label: 'UK & Ireland',
-          borderColor: 'rgba(147, 51, 234, 1)',
-          backgroundColor: 'rgba(147, 51, 234, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [5, 7, 9, 11, 13, 15, 17],
-          label: 'South Asia',
-          borderColor: 'rgba(34, 197, 94, 1)',
-          backgroundColor: 'rgba(34, 197, 94, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [4, 6, 8, 10, 12, 14, 16],
-          label: 'South East Asia',
-          borderColor: 'rgba(37, 99, 235, 1)',
-          backgroundColor: 'rgba(37, 99, 235, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [3, 5, 7, 9, 11, 13, 15],
-          label: 'Australia & New Zealand',
-          borderColor: 'rgba(107, 114, 128, 1)',
-          backgroundColor: 'rgba(107, 114, 128, 0.1)',
-          tension: 0.4
-        },
-        {
-          data: [2, 4, 6, 8, 10, 12, 14],
-          label: 'MENA',
-          borderColor: 'rgba(126, 34, 206, 1)',
-          backgroundColor: 'rgba(126, 34, 206, 0.1)',
-          tension: 0.4
-        }
-      ]
+      labels,
+      datasets: Object.keys(data).map((label, index) => ({
+        data: data[label as keyof typeof data],
+        label,
+        borderColor: colors[index].border,
+        backgroundColor: colors[index].bg,
+        tension: 0.4
+      }))
     };
   }
 
