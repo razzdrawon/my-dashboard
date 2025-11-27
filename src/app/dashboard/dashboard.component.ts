@@ -22,7 +22,17 @@ export class DashboardComponent {
   constructor(private dataService: DashboardDataService) {
     this.organizations = this.dataService.getOrganizations();
     this.dateRanges = this.dataService.getDateRanges();
-    this.kpis = this.dataService.getKpis();
+    this.loadKpis();
+  }
+
+  onOrganizationChange(): void {
+    this.loadKpis();
+  }
+
+  private loadKpis(): void {
+    this.kpis = this.dataService.getKpis(
+      this.selectedOrganization || undefined
+    );
   }
 }
 

@@ -6,7 +6,7 @@
       <select 
         id="organization" 
         [value]="selectedOrganization"
-        (change)="selectedOrganization = $any($event.target).value"
+        (change)="selectedOrganization = $any($event.target).value; onOrganizationChange()"
         class="filter-select">
         <option value="">All</option>
         @for (org of organizations; track org.id) {

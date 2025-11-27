@@ -6,7 +6,35 @@ import { KpiCardData } from '../components/kpi-card/kpi-card.component';
   providedIn: 'root'
 })
 export class DashboardDataService {
-  getKpis(): KpiCardData[] {
+  getKpis(organizationId?: string): KpiCardData[] {
+    // Datos base por organización
+    const kpiDataByOrg: { [key: string]: KpiCardData[] } = {
+      '1': [
+        { label: 'TOTAL USECASES', value: '180', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '172', trend: '+45 in last 6 Months' },
+        { label: 'USECASE DEPLOYMENT TIMES', value: '58', description: 'days on average' },
+        { label: 'CRITICAL OVERDUE RISKS', value: '12', description: 'across 38 usecases' }
+      ],
+      '2': [
+        { label: 'TOTAL USECASES', value: '95', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '88', trend: '+28 in last 6 Months' },
+        { label: 'USECASE DEPLOYMENT TIMES', value: '65', description: 'days on average' },
+        { label: 'CRITICAL OVERDUE RISKS', value: '8', description: 'across 22 usecases' }
+      ],
+      '3': [
+        { label: 'TOTAL USECASES', value: '142', description: 'in development & production' },
+        { label: 'USECASES IN PRODUCTION', value: '135', trend: '+35 in last 6 Months' },
+        { label: 'USECASE DEPLOYMENT TIMES', value: '63', description: 'days on average' },
+        { label: 'CRITICAL OVERDUE RISKS', value: '10', description: 'across 31 usecases' }
+      ]
+    };
+
+    // Si hay una organización seleccionada, devolver sus datos
+    if (organizationId && kpiDataByOrg[organizationId]) {
+      return kpiDataByOrg[organizationId];
+    }
+
+    // Si no hay filtro, devolver datos agregados (total)
     return [
       { 
         label: 'TOTAL USECASES', 
