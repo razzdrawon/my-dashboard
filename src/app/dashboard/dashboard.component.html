@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <!-- KPI Cards -->
+  <div class="kpi-cards">
+    @for (kpi of kpis; track kpi.id) {
+      <app-kpi-card [label]="kpi.label" [value]="kpi.value"></app-kpi-card>
+    }
+  </div>
+
+  <!-- Line Chart -->
+  <app-line-chart></app-line-chart>
+
+  <!-- Donut Charts -->
+  <div class="donut-charts-container">
+    <app-donut-chart title="Donut Chart 1"></app-donut-chart>
+    <app-donut-chart title="Donut Chart 2"></app-donut-chart>
+  </div>
+</div>
+
