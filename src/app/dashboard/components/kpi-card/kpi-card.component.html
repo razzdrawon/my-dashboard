@@ -1,5 +1,11 @@
 <div class="kpi-card">
-  <div class="kpi-label">{{ label }}</div>
-  <div class="kpi-value">{{ value }}</div>
+  <div class="kpi-label">{{ data.label }}</div>
+  <div class="kpi-value">{{ data.value }}</div>
+  @if (data.description) {
+    <div class="kpi-description">{{ data.description }}</div>
+  }
+  @if (data.trend) {
+    <div class="kpi-trend">{{ data.trend }}</div>
+  }
 </div>
 

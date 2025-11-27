@@ -1,7 +1,12 @@
 <div class="chart-container">
-  <div class="chart-title">Line Chart</div>
-  <div class="line-chart-placeholder">
-    <!-- Line chart will go here -->
+  <div class="chart-title">USECASE DEVELOPMENT OVER TIME</div>
+  <div class="chart-subtitle">Usecases deployed by Business Unit</div>
+  <div class="chart-wrapper">
+    <canvas baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            type="line">
+    </canvas>
   </div>
 </div>
 
